@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>||---______---||</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="responsive.css" />
+  </head>
+  <body>
+    <header class="heading">
+      <article class="logo">Expense-Tracker</article>
+      <p>Track Your Spending</p>
+    </header>
+
+    <section id="input-expenses">
+      <form action="">
+        <div class="container">
+          <div class="amount">
+            <label for="text">Amount:</label>
+            <input
+              type="text"
+              name="amount"
+              id="expense-amount"
+              placeholder="Enter Amount"
+            />
+          </div>
+
+          <div class="select">
+            <label for="select">Choose expense:</label>
+            <select name="" id="select-expense">
+              <option value="0">Food</option>
+              <option value="1">Transportation</option>
+              <option value="2">Entertainment</option>
+              <option value="3">Bills</option>
+            </select>
+          </div>
+          <div class="amount">
+            <label for="text">Date:</label>
+            <input
+              type="date"
+              name="date"
+              id="expense-date"
+              placeholder="Enter date"
+            />
+          </div>
+        </div>
+        <div class="btn">
+          <button type="button" onclick="pushToArray()" id="expense-button">
+            Add Expense
+          </button>
+        </div>
+      </form>
+      <div class="clear-btn">
+        <center><button type="button" onclick="clearTable()" id="clear">Clear Table</button></center>
+      </div>
+      <center><div id="error"></div></center>
+    </section>
+
+    <div id="calculateAmount"></div>
+
+    <div id="showContent">
+      <table>
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="transactions"></div>
+  </body>
+  <script src="script.js"></script>
+</html>

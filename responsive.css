@@ -1,0 +1,34 @@
+@media screen and (max-width: 320px) {
+    form{
+        flex-direction: column;
+    }
+    #input-expenses{
+        width: 85%;
+    }
+    .container{
+        flex-direction: column;
+    }
+    input, select, option{
+        width: 140px;
+    }
+    #showContent{
+        width: 267px;
+    }
+}
+@media screen and (max-width: 480px) {
+    form{
+        flex-direction: column;
+    }
+    #input-expenses{
+        width: 85%;
+    }
+    .container{
+        flex-direction: column;
+    }
+    input, select, option{
+        width: 140px;
+    }
+    #showContent{
+        width: 267px;
+    }
+}

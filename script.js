@@ -1,51 +1,99 @@
 'use strict';
+
+// DOM element references
 const transactions = document.getElementById('transactions');
 const tbody = document.querySelector('tbody');
+const showError = document.getElementById('error');
+const totalAmount = document.getElementById('calculateAmount');
+const clear = document.getElementById('clear');
+
+// Get initial table body content
 let tbodyinner = document.querySelector('tbody').innerHTML;
+
+// Array to store expense entries (amount, date, and category)
 let char = [];
 
+// Show message if no transactions exist
 if (tbodyinner === '') {
     console.log(transactions.innerHTML = `<h3>No Recent Transactions</h3>`)
 }
 
+// Initially hide UI elements
+totalAmount.classList.add('invisible');
+showError.classList.add('invisible');
+clear.classList.add('invisible');
+
+/**
+ * Handles the addition of a new expense entry
+ * Validates input, updates the UI, and maintains the expense records
+ */
 const pushToArray = () => {
-    let total = 0;
-    const showError = document.getElementById('error');
-    let amount = document.getElementById('expense-amount').value;
+    // Get input values
     const dateOfExpense = document.getElementById('expense-date').value;
-    const totalAmount = document.getElementById('calculateAmount');
     const selectAttr = document.getElementById('select-expense').value;
     const selectElement = document.getElementById('select-expense');
     const selectedText = selectElement.options[selectAttr].text;
 
-    amount = amount.replace(/ +/g, '');/*replace all spaces in amount input with '' */
-    showError.style.color = 'red';
-    if (amount.trim() === '' && dateOfExpense.trim() === '') {
-        showError.style.display = 'block';
-        console.error(showError.innerHTML = `<h3>No parameter found in Amount and Date</h3>`);
-    } else if (amount <= 0 || isNaN(amount) || amount.length > 9) {
-        showError.style.display = 'block';
-        console.error(showError.innerHTML = `<h3>Invalid Parameter in Amount</h3>`);
-    } else if (dateOfExpense.trim() === '') {
-        showError.style.display = 'block';
-        console.error(showError.innerHTML = `<h3>No value found in Date</h3>`);
-    } else {
-        showError.style.display = 'none';
-        transactions.style.display = `none`;
-        document.getElementById('calculateAmount').style.display = `block`
+    // Get current date for validation
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Add 1 because getMonth() is 0-indexed
+    const day = now.getDate();
+    const currentDate = `${year}-${month}-${day}`;
 
-        //adds the value in the input to the array 'char'
+    // Initialize variables for expense calculation
+    let total = 0;
+    let amount = document.getElementById('expense-amount').value;
+
+    // Clean up amount input by removing all spaces
+    amount = amount.replace(/ +/g, '');
+
+    // Set error message color
+    showError.style.color = 'red';
+
+    // Input validation
+    if (amount.trim() === '' && dateOfExpense.trim() === '') {
+        // Both amount and date are empty
+        showError.classList.remove('invisible');
+        showError.innerHTML = `<h3>No parameter found in Amount and Date</h3>`;
+    } else if (amount <= 0 || isNaN(amount) || amount.length > 9) {
+        // Amount is invalid (negative, non-numeric, or too large)
+        showError.classList.remove('invisible');
+        showError.innerHTML = `<h3>Invalid Parameter in Amount</h3>`;
+    } else if (dateOfExpense.trim() === '') {
+        // Date is empty
+        showError.classList.remove('invisible');
+        showError.innerHTML = `<h3>No value found in Date</h3>`;
+    } else if (dateOfExpense > currentDate) {
+        // Date is in the future
+        showError.classList.remove('invisible');
+        showError.innerHTML = `<h3>Date cannot be in the future</h3>`;
+    }
+    else {
+        // All validation passed, update UI elements visibility
+        totalAmount.classList.add('visible');
+        showError.classList.add('invisible');
+        transactions.classList.add('invisible');
+        clear.classList.remove('invisible');
+        totalAmount.classList.remove('invisible');
+
+        // Store expense details in array
+        // Format: [amount1, date1, category1, amount2, date2, category2, ...]
         char.push(amount);
         char.push(dateOfExpense);
         char.push(selectedText);
 
-        //to calculate the total amount on expenses
+        // Calculate total expenses by summing amounts (every 3rd item in array)
         for (let i = 0; i < char.length; i += 3) {
             total += Number(char[i]);
         }
-        console.log(totalAmount.innerHTML = `<h2>Total amount spent is $${total}</h2>`);
-        console.log(total)
 
+        // Update total amount display
+        console.log(totalAmount.innerHTML = `<h2>Total amount spent is $${total}</h2>`);
+        console.log(total);
+
+        // Add new row to expense table
+        // Uses the last 3 items added to the char array
         console.log(tbody.innerHTML += `
             <tr>
                 <td>$${char[char.length - 3]}</td>
@@ -53,142 +101,38 @@ const pushToArray = () => {
                 <td>${char[char.length - 2]}</td>
                 <td><button type="button" id="delete-row" onclick="deleteRow()">Delete Row</button></td>
             </tr>
-        `);/*adds data to rows and keeps appending table row once the add expense button is clicked */
+        `);
+        // Reset form inputs after successful addition
         document.getElementById("expense-amount").value = '';
         document.getElementById("expense-date").value = '';
         document.getElementById('select-expense').value = '0';
-        document.getElementById('clear').style.display = `block`
     }
 }
 
-//Button for clearing the table body
+/**
+ * Clears all expense entries and resets the UI
+ * - Empties the expense array
+ * - Clears the table
+ * - Resets visibility of UI elements
+ */
 const clearTable = () => {
-    char = [];//updates the current value of char
-    document.querySelector('tbody').innerHTML = ``;
-    transactions.style.display = `block`;
-    document.getElementById('clear').style.display = `none`
-    document.getElementById('calculateAmount').style.display = `none`;
+    char = [];  // Reset expense array
+    document.querySelector('tbody').innerHTML = '';  // Clear table
+
+    // Reset UI elements visibility
+    transactions.classList.remove('invisible');
+    document.getElementById('clear').classList.add('invisible');
+    totalAmount.classList.add('invisible');
 }
 
-//button for deleting table rows in the table body
-const deleteRow = () => alert('hi')
-
-// const transactions = document.getElementById('transactions');
-// let char = [];
-// if (char.length === 0)
-//     transactions.innerHTML = `<h3>No Recent Transactions</h3>`
-// const pushToArray = () => {
-//     let total = 0;
-//     const showError = document.getElementById('error');
-//     let amount = document.getElementById('expense-amount').value;
-//     const dateOfExpense = document.getElementById('expense-date').value;
-//     const totalAmount = document.getElementById('calculateAmount');
-//     const selectAttr = document.getElementById('select-expense').value;
-//     const selectElement = document.getElementById('select-expense');
-//     const selectedText = selectElement.options[selectAttr].text;
-//     const tbody = document.querySelector('tbody');
-
-//     amount = amount.replace(/ +/g, '');
-//     showError.style.color = 'red';
-//     if (amount.trim() === '' && dateOfExpense.trim() === '') {
-//         showError.style.display = 'block';
-//         console.error(showError.innerHTML = `<h3>No parameter found in Amount and Date</h3>`);
-//     } else if (amount <= 0 || isNaN(amount) || amount.length > 9) {
-//         showError.style.display = 'block';
-//         console.error(showError.innerHTML = `<h3>Invalid Parameter in Amount</h3>`);
-//     } else if (dateOfExpense.trim() === '') {
-//         showError.style.display = 'block';
-//         console.error(showError.innerHTML = `<h3>No value found in Date</h3>`);
-//     } else {
-//         showError.style.display = 'none';
-//         transactions.style.display = `none`;
-
-//         char.push(amount);
-//         char.push(dateOfExpense);
-//         char.push(selectedText);
-
-//         for (let i = 0; i < char.length; i += 3) {
-//             total += Number(char[i]);
-//         }
-//         totalAmount.innerHTML = `<h2>Total amount spent is $${total}</h2>`;
-
-//         tbody.innerHTML += `
-//             <tr>
-//                 <td>$${char[char.length - 3]}</td>
-//                 <td>${char[char.length - 1]}</td>
-//                 <td>${char[char.length - 2]}</td>
-//             </tr>
-//         `
-
-//         document.getElementById("expense-amount").value = '';
-//         document.getElementById("expense-date").value = '';
-//         document.getElementById('select-expense').value = '0';
-//         document.getElementById('clear').style.display = `block`
-//     }
-// }
-
-// const clearTable = () => {
-//     char = [];
-// }
-
-// event-listener
-
-// const expenseBtn = document.getElementById('expense-button');
-// const transactions = document.getElementById('transactions');
-// const tbody = document.querySelector('tbody');
-// let tbodyinner = document.querySelector('tbody').innerHTML;
-// let char = [];
-
-// if (tbodyinner === '') {
-//     transactions.innerHTML = `<h3>No Recent Transactions</h3>`
-// }
-
-// function pushToArray() {
-//     const showError = document.getElementById('error');
-//     const dateOfExpense = document.getElementById('expense-date').value;
-//     const totalAmount = document.getElementById('calculateAmount');
-//     const selectAttr = document.getElementById('select-expense').value;
-//     const selectElement = document.getElementById('select-expense');
-//     const selectedText = selectElement.options[selectAttr].text;
-//     let amount = document.getElementById('expense-amount').value;
-//     let total = 0;
-
-//     amount = amount.replace(/ +/g, '');
-//     showError.style.color = 'red';
-//     if (amount.trim() === '' && dateOfExpense.trim() === '') {
-//         showError.style.display = 'block';
-//         console.log(showError.innerHTML = `<h3>No parameter found in Amount and Date</h3>`);
-//     } else if (amount <= 0 || isNaN(amount) || amount.length > 9) {
-//         showError.style.display = 'block';
-//         showError.innerHTML = `<h3>Invalid Parameter in Amount</h3>`;
-//     } else if (dateOfExpense.trim() === '') {
-//         showError.style.display = 'block';
-//         showError.innerHTML = `<h3>No value found in Date</h3>`;
-//     } else {
-//         showError.style.display = 'none';
-//         transactions.style.display = `none`;
-//         document.getElementById('calculateAmount').style.display = `block`
-
-//         char.push(amount);
-//         char.push(dateOfExpense);
-//         char.push(selectedText);
-
-//         for (let i = 0; i < char.length; i += 3) {
-//             total += Number(char[i]);
-//         }
-//         totalAmount.innerHTML = `<h2>Total amount spent is $${total}</h2>`;
-
-//         tbody.innerHTML += `
-//             <tr>
-//                 <td>$${char[char.length - 3]}</td>
-//                 <td>${char[char.length - 1]}</td>
-//                 <td>${char[char.length - 2]}</td>
-//             </tr>
-//         `
-//         document.getElementById("expense-amount").value = '';
-//         document.getElementById("expense-date").value = '';
-//         document.getElementById('select-expense').value = '0';
-//         document.getElementById('clear').style.display = `block`
-//     }
-// }
-// expenseBtn.addEventListener('click', pushToArray);
+/**
+ * Deletes a single row from the expense table
+ * Note: Current implementation has limitations and could be improved
+ * to properly remove the corresponding data from the char array
+ */
+const deleteRow = () => {
+    for (let i = 0; i < char.length; i++) {
+        console.log(char.splice(i, i + 1, i + 2));
+        break;
+    }
+}

@@ -125,15 +125,21 @@ td {
   height: 50px;
   font-size: 24px;
 }
-#error{
+/* #error{
   display: none;
-}
+} */
 #transactions {
   color: var(--text);
 }
 tbody {
   line-height: 40px;
 }
-.clear-btn button{
+/* .clear-btn button{
+  display: none;
+} */
+.visible{
+  display: block;
+}
+.invisible{
   display: none;
 }

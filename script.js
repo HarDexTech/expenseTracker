@@ -89,8 +89,7 @@ const pushToArray = () => {
         }
 
         // Update total amount display
-        console.log(totalAmount.innerHTML = `<h2>Total amount spent is $${total}</h2>`);
-        console.log(total);
+        totalAmount.innerHTML = `<h2>Total amount spent is $${total}</h2>`;
 
         // Add new row to expense table
         // Uses the last 3 items added to the char array
@@ -102,6 +101,8 @@ const pushToArray = () => {
                 <td><button type="button" id="delete-row" onclick="deleteRow()">Delete Row</button></td>
             </tr>
         `);
+        // <td><button type="button" id="delete-row" onclick="deleteRow()">Delete Row</button></td>
+
         // Reset form inputs after successful addition
         document.getElementById("expense-amount").value = '';
         document.getElementById("expense-date").value = '';
@@ -130,9 +131,7 @@ const clearTable = () => {
  * Note: Current implementation has limitations and could be improved
  * to properly remove the corresponding data from the char array
  */
-const deleteRow = () => {
-    for (let i = 0; i < char.length; i++) {
-        console.log(char.splice(i, i + 1, i + 2));
-        break;
-    }
-}
+
+
+// const deleteRow = () => {
+// }

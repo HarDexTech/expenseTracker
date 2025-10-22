@@ -132,6 +132,12 @@ const clearTable = () => {
  * to properly remove the corresponding data from the char array
  */
 
-
 // const deleteRow = () => {
+//     document.querySelector('body').classList.toggle('mode')
 // }
+
+
+//button to change the body theme
+const bgtheme = () => {
+    document.querySelector('body').classList.toggle('theme')
+}

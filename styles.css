@@ -16,7 +16,6 @@ body {
   flex-direction: column;
 }
 header {
-  width: calc(100%-30px);
   height: 50px;
   padding: 20px 30px;
   pointer-events: none;
@@ -142,4 +141,25 @@ tbody {
 }
 .invisible{
   display: none;
+}
+
+/* button to change the body theme */
+.theme{
+  background: black;
+}
+button img{
+  aspect-ratio: 1;
+  width: 100%;
+}
+#bgtheme{
+  background: none;
+  aspect-ratio: 1;
+  width: 60px;
+  height: 60px;
+}
+.bg-theme{
+  background: none;
+  position: fixed;
+  top: 20px;
+  right: 30px;
 }

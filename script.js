@@ -98,15 +98,13 @@ const pushToArray = () => {
                 <td>$${char[char.length - 3]}</td>
                 <td>${char[char.length - 1]}</td>
                 <td>${char[char.length - 2]}</td>
-                <td><button type="button" id="delete-row" onclick="deleteRow()">Delete Row</button></td>
             </tr>
         `);
-        // <td><button type="button" id="delete-row" onclick="deleteRow()">Delete Row</button></td>
 
         // Reset form inputs after successful addition
-        document.getElementById("expense-amount").value = '';
-        document.getElementById("expense-date").value = '';
-        document.getElementById('select-expense').value = '0';
+        // document.getElementById("expense-amount").value = '';
+        // document.getElementById("expense-date").value = '';
+        // document.getElementById('select-expense').value = '0';
     }
 }
 
@@ -126,18 +124,8 @@ const clearTable = () => {
     totalAmount.classList.add('invisible');
 }
 
-/**
- * Deletes a single row from the expense table
- * Note: Current implementation has limitations and could be improved
- * to properly remove the corresponding data from the char array
- */
-
-// const deleteRow = () => {
-//     document.querySelector('body').classList.toggle('mode')
-// }
-
 
 //button to change the body theme
 const bgtheme = () => {
-    document.querySelector('body').classList.toggle('theme')
+    document.querySelector('body').classList.toggle('theme');
 }

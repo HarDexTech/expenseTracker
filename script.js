@@ -12,6 +12,7 @@ let tbodyinner = document.querySelector('tbody').innerHTML;
 
 // Array to store expense entries (amount, date, and category)
 let char = [];
+let count = 0;
 
 // Show message if no transactions exist
 if (tbodyinner === '') {
@@ -22,6 +23,7 @@ if (tbodyinner === '') {
 totalAmount.classList.add('invisible');
 showError.classList.add('invisible');
 clear.classList.add('invisible');
+document.getElementById('insights').classList.add('invisible');
 
 /**
  * Handles the addition of a new expense entry
@@ -55,19 +57,19 @@ const pushToArray = () => {
     if (amount.trim() === '' && dateOfExpense.trim() === '') {
         // Both amount and date are empty
         showError.classList.remove('invisible');
-        showError.innerHTML = `<h3>No parameter found in Amount and Date</h3>`;
+        showError.innerHTML = `<h3>Oops!, No parameter found in Amount and Date</h3>`;
     } else if (amount <= 0 || isNaN(amount) || amount.length > 9) {
         // Amount is invalid (negative, non-numeric, or too large)
         showError.classList.remove('invisible');
-        showError.innerHTML = `<h3>Invalid Parameter in Amount</h3>`;
+        showError.innerHTML = `<h3>Oops!, Invalid Parameter in Amount</h3>`;
     } else if (dateOfExpense.trim() === '') {
         // Date is empty
         showError.classList.remove('invisible');
-        showError.innerHTML = `<h3>No value found in Date</h3>`;
+        showError.innerHTML = `<h3>Oops!, No value found in Date</h3>`;
     } else if (dateOfExpense > currentDate) {
         // Date is in the future
         showError.classList.remove('invisible');
-        showError.innerHTML = `<h3>Date cannot be in the future</h3>`;
+        showError.innerHTML = `<h3>Oops!, Date cannot be in the future</h3>`;
     }
     else {
         // All validation passed, update UI elements visibility
@@ -82,6 +84,7 @@ const pushToArray = () => {
         char.push(amount);
         char.push(dateOfExpense);
         char.push(selectedText);
+        count += 1;
 
         // Calculate total expenses by summing amounts (every 3rd item in array)
         for (let i = 0; i < char.length; i += 3) {
@@ -102,9 +105,21 @@ const pushToArray = () => {
         `);
 
         // Reset form inputs after successful addition
-        // document.getElementById("expense-amount").value = '';
-        // document.getElementById("expense-date").value = '';
-        // document.getElementById('select-expense').value = '0';
+        document.getElementById("expense-amount").value = '';
+        document.getElementById("expense-date").value = '';
+        document.getElementById('select-expense').value = '0';
+
+        // Calculate and display average expense if more than one entry exists
+        if (count > 1) {
+            let avg = total / ((char.length) / 3);
+            document.getElementById('insights').classList.remove('invisible');
+            document.getElementById('insights').innerHTML = `<h3>Average expense amount is $${avg.toFixed(2)}</h3>`;
+        }
+
+        if(total > 1000){
+            document.getElementById('insights').classList.remove('invisible');
+            document.getElementById('insights').innerHTML += `<h3 style="color:red;">Warning: High Spending!</h3>`;
+        }
     }
 }
 
@@ -122,6 +137,13 @@ const clearTable = () => {
     transactions.classList.remove('invisible');
     document.getElementById('clear').classList.add('invisible');
     totalAmount.classList.add('invisible');
+    document.getElementById('insights').classList.add('invisible');
+    showError.classList.add('invisible');
+
+    // Clear error messages and insights
+    showError.innerHTML = ``;
+    count = 0;
+    document.getElementById('insights').innerHTML = ``;
 }
 
 

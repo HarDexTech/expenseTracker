@@ -15,10 +15,10 @@
 
     <!-- button to change the body theme -->
     <div class="bg-theme">
-        <button type="button" id="bgtheme" onclick="bgtheme()">
-          <img src="assets/download.png" alt="">
-        </button>
-      </div>
+      <button type="button" id="bgtheme" onclick="bgtheme()">
+        <img src="assets/download.png" alt="" />
+      </button>
+    </div>
 
     <section id="input-expenses">
       <form action="">
@@ -59,9 +59,15 @@
         </div>
       </form>
       <div class="clear-btn">
-        <center><button type="button" onclick="clearTable()" id="clear">Clear Table</button></center>
+        <center>
+          <button type="button" onclick="clearTable()" id="clear">
+            Clear Table
+          </button>
+        </center>
       </div>
-      <center><div id="error"></div></center>
+      <div id="error"></div>
+
+      <div id="insights"></div>
     </section>
 
     <div id="calculateAmount"></div>

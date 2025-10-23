@@ -119,48 +119,50 @@ td {
   text-align: center;
 }
 #error,
-#transactions {
+#transactions,
+#insights {
   width: auto;
   height: 50px;
   font-size: 24px;
 }
-/* #error{
-  display: none;
-} */
 #transactions {
   color: var(--text);
 }
 tbody {
   line-height: 40px;
 }
-/* .clear-btn button{
-  display: none;
-} */
-.visible{
+.visible {
   display: block;
 }
-.invisible{
+.invisible {
   display: none;
 }
 
 /* button to change the body theme */
-.theme{
+.theme {
   background: black;
 }
-button img{
+button img {
   aspect-ratio: 1;
   width: 100%;
   border-radius: 25px 5px 25px 20px;
 }
-#bgtheme{
+#bgtheme {
   background: none;
   aspect-ratio: 1;
   width: 60px;
   height: 60px;
 }
-.bg-theme{
+.bg-theme {
   background: none;
   position: fixed;
   top: 20px;
   right: 30px;
+}
+#insights,
+#error {
+  text-align: center;
+}
+#insights h3 {
+  color: var(--text);
 }

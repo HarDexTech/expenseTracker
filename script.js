@@ -118,7 +118,7 @@ const pushToArray = () => {
 
         if(total > 1000){
             document.getElementById('insights').classList.remove('invisible');
-            document.getElementById('insights').innerHTML += `<h3 style="color:red;">Warning: High Spending!</h3>`;
+            document.getElementById('insights').innerHTML = `<h3 style="color:red;">Warning: High Spending!</h3>`;
         }
     }
 }

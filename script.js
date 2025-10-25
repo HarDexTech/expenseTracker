@@ -12,6 +12,8 @@ let tbodyinner = document.querySelector('tbody').innerHTML;
 
 // Array to store expense entries (amount, date, and category)
 let char = [];
+
+// variable to store the number of times a button is clicked
 let count = 0;
 
 // Show message if no transactions exist
@@ -31,7 +33,7 @@ document.getElementById('insights').classList.add('invisible');
  */
 const pushToArray = () => {
     // Get input values
-    const dateOfExpense = document.getElementById('expense-date').value;
+    const dateOfExpense = document.getElementById('expenseDate').value;
     const selectAttr = document.getElementById('select-expense').value;
     const selectElement = document.getElementById('select-expense');
     const selectedText = selectElement.options[selectAttr].text;
@@ -66,10 +68,17 @@ const pushToArray = () => {
         // Date is empty
         showError.classList.remove('invisible');
         showError.innerHTML = `<h3>Oops!, No value found in Date</h3>`;
+
+        // show date picker if date is not found
+        expenseDate.showPicker();
+
     } else if (dateOfExpense > currentDate) {
         // Date is in the future
         showError.classList.remove('invisible');
         showError.innerHTML = `<h3>Oops!, Date cannot be in the future</h3>`;
+
+        // show date picker if date is invalid
+        expenseDate.showPicker();
     }
     else {
         // All validation passed, update UI elements visibility
@@ -106,7 +115,7 @@ const pushToArray = () => {
 
         // Reset form inputs after successful addition
         document.getElementById("expense-amount").value = '';
-        document.getElementById("expense-date").value = '';
+        document.getElementById("expenseDate").value = '';
         document.getElementById('select-expense').value = '0';
 
         // Calculate and display average expense if more than one entry exists
@@ -116,7 +125,7 @@ const pushToArray = () => {
             document.getElementById('insights').innerHTML = `<h3>Average expense amount is $${avg.toFixed(2)}</h3>`;
         }
 
-        if(total > 1000){
+        if (total > 1000) {
             document.getElementById('insights').classList.remove('invisible');
             document.getElementById('insights').innerHTML = `<h3 style="color:red;">Warning: High Spending!</h3>`;
         }
